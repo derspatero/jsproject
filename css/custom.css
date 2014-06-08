@@ -16,7 +16,7 @@ footer {
 
 section {
     background-color: #ffff00;
-    margin: 20px
+    margin: 0 auto;
 }
 
 table {
@@ -38,11 +38,7 @@ div {
     display: inline-block;
 }
 
-
-/*js test*/
-.row2 .col4 {
-    background-image: url("../img/card2.jpg");
-    background-repeat: no-repeat;
-    background-size:230px 150px;
+.card {
+    height: 150px;
+    width: 230px;
 }
-
