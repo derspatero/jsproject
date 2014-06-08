@@ -16,26 +16,29 @@ var cell13 = document.getElementById('cell13');
 var cell14 = document.getElementById('cell14');
 var cell15 = document.getElementById('cell15');
 
-
 var cells = [];
 
+var startStopGame = document.getElementById('start_end_button');
+var numberOfTurns = document.getElementById('number_of_turns');
+var numberOfMatches = document.getElementById('number_of_matches');
+
+var stopGame = false;
+var turns = 0;
+var matches = 0;
 
 //get cards
 for(var i=0; i < 16; i++) {
     cells.push(document.getElementById('cell' + i));
 }
 
-
 var cards = [];
 
 //load images
 for(var i=0; i < 8; i++) {
     var image = new Image();
-
     if(i<10) {
         image.src = 'img/card' + i + '.jpg';
     }
-
     cards.push(image);
 }
 
@@ -64,14 +67,38 @@ for (var i = 0; i < 16; i++) {
 }
 cellImages = shuffledCards;
 
+//startStopGame.onclick = startStopClick;
+
+/*function gameSession() {
+    stopGame = false;
+    turns = 0;
+    matches = 0;
+    while (!stopGame){
+        numberOfTurns.innerHTML = turns;
+        numberOfMatches.innerHTML = matches;
+        startStopGame.onclick = startStopClick;
 
 
+        turns ++;
+        if (matches == 8) {
+            stopGame = true;
+        }
+    }
+}
+*/
 
 
-
-
-
-
+/*
+function startStopClick(){
+    if(stopGame){
+        stopGame = false;
+//        gameSession();
+    }
+    else {
+        stopGame = true
+    }
+}
+*/
 
 
 //turn cards
@@ -174,4 +201,11 @@ function turnOverCard15() {
 function turnOverCard(i) {
     i = parseFloat(i);
     cells[i].innerHTML = '<img id="card' + i + '" class="card" src="' + cellImages[i].src + '">';
+    setTimeout(turnAllCardsFaceDown, 10000);
+}
+
+function turnAllCardsFaceDown() {
+    for (var i = 0; i < 16; i++) {
+        cells[i].innerHTML = '';
+    }
 }
