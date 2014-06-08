@@ -19,6 +19,8 @@ var cell15 = document.getElementById('cell15');
 
 var cells = [];
 
+
+//get cards
 for(var i=0; i < 16; i++) {
     cells.push(document.getElementById('cell' + i));
 }
@@ -26,6 +28,7 @@ for(var i=0; i < 16; i++) {
 
 var cards = [];
 
+//load images
 for(var i=0; i < 8; i++) {
     var image = new Image();
 
@@ -38,6 +41,7 @@ for(var i=0; i < 8; i++) {
 
 var cellImages = [];
 
+//assign images to cards
 for(var i=0; i < 16; i++) {
     if (i<=7) {
         cellImages[i] = cards[i];
@@ -45,9 +49,32 @@ for(var i=0; i < 16; i++) {
     else {
         cellImages[i] = cards[i-8];
     }
-
 }
 
+
+
+//shuffle cards
+var shuffledCards = [];
+for (var i = 0; i < 16; i++) {
+    var randomPosition = Math.round(Math.random() * 15);
+    while (shuffledCards[randomPosition] != null){
+        randomPosition = Math.round(Math.random() * 15);
+    }
+    shuffledCards[randomPosition] = cellImages[i];
+}
+cellImages = shuffledCards;
+
+
+
+
+
+
+
+
+
+
+
+//turn cards
 cell0.onclick = turnOverCard0;
 
 function turnOverCard0() {
