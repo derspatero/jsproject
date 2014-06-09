@@ -70,38 +70,25 @@ cellImages = shuffledCards;
 
 startStopGame.onclick = startStopClick;
 
-/*function gameSession() {
-    stopGame = false;
-    turns = 0;
-    matches = 0;
-    while (!stopGame){
-        numberOfTurns.innerHTML = turns;
-        numberOfMatches.innerHTML = matches;
-        startStopGame.onclick = startStopClick;
-
-
-        turns ++;
-        if (matches == 8) {
-            stopGame = true;
-        }
-    }
-}
-*/
-
 function startStopClick(){
     if(stopGame){
         startStopGame.innerHTML = 'Stop Game';
         stopGame = false;
-        gameTurn();
+        turns = 0;
+        matches = 0;
+        updateNumberOfTurns();
+        newMatch();
+        turnAllCardsFaceDown();
+        gameOn();
     }
     else {
         startStopGame.innerHTML = 'Start Game';
         stopGame = true;
+        location.reload();
     }
 }
 
-function gameTurn() {
-
+function gameOn() {
     //turn cards
     cell0.onclick = turnOverCard0;
     cell1.onclick = turnOverCard1;
@@ -128,88 +115,60 @@ function turnOverCard0() {
     turnOverCard(0);
 }
 
-
 function turnOverCard1() {
     turnOverCard(1);
 }
-
-
 function turnOverCard2() {
     turnOverCard(2);
 }
-
-
 
 function turnOverCard3() {
     turnOverCard(3);
 }
 
-
-
 function turnOverCard4() {
     turnOverCard(4);
 }
-
-
 
 function turnOverCard5() {
     turnOverCard(5);
 }
 
-
-
 function turnOverCard6() {
     turnOverCard(6);
 }
-
-
 
 function turnOverCard7() {
     turnOverCard(7);
 }
 
-
-
 function turnOverCard8() {
     turnOverCard(8);
 }
-
-
 
 function turnOverCard9() {
     turnOverCard(9);
 }
 
-
-
 function turnOverCard10() {
     turnOverCard(10);
 }
-
-
 
 function turnOverCard11() {
     turnOverCard(11);
 }
 
-
-
 function turnOverCard12() {
     turnOverCard(12);
 }
-
-
 
 function turnOverCard13() {
     turnOverCard(13);
 }
 
-
-
 function turnOverCard14() {
     turnOverCard(14);
 }
-
 
 function turnOverCard15() {
     turnOverCard(15);
@@ -217,29 +176,30 @@ function turnOverCard15() {
 
 function turnOverCard(i) {
     i = parseFloat(i);
-    cells[i].innerHTML = '<img id="card' + i + '" class="card" src="' + cellImages[i].src + '">';
-    if (cardselected[0] == null) {
-        cardselected[0] = i;
- //       alert('card 0: cell #' + i);
-    }
-    else {
-        cardselected[1] = i;
-        turns = turns + 1;
-        updateNumberOfTurns();
-        if (cellImages[cardselected[0]].src == cellImages[cardselected[1]].src) {
-            newMatch();
-            if (matches == 8){
-                alert ('Yay! It took ' + turns + ' turns.');
-            }
+    if (cells[i].innerHTML == '' && cardselected[1] == null) {
+        cells[i].innerHTML = '<img id="card' + i + '" class="card" src="' + cellImages[i].src + '">';
+        if (cardselected[0] == null) {
+            cardselected[0] = i;
         }
         else {
-            alert('no match');
-            turnCardsFaceDown();
+            cardselected[1] = i;
+            turns = turns + 1;
+            updateNumberOfTurns();
+            if (cellImages[cardselected[0]].src == cellImages[cardselected[1]].src) {
+                matches = matches + 1;
+                newMatch();
+                cardselected[0] = null;
+                cardselected[1] = null;
+                if (matches == 8) {
+                    alert('Yay! It took ' + turns + ' turns.');
+                    startStopGame.innerHTML = 'Restart Game';
+                    stopGame = true;
+                }
+            }
+            else {
+                setTimeout(turnCardsFaceDown, 1500);
+            }
         }
-
-        cardselected[0] = null;
-        cardselected[1] = null;
-
     }
 }
 
@@ -248,13 +208,14 @@ function updateNumberOfTurns(){
 }
 
 function newMatch(){
-    matches = matches + 1;
     numberOfMatches.innerHTML = matches;
 }
 
 function turnCardsFaceDown() {
     cells[cardselected[0]].innerHTML = '';
     cells[cardselected[1]].innerHTML = '';
+    cardselected[0] = null;
+    cardselected[1] = null;
 }
 
 function turnAllCardsFaceDown() {
