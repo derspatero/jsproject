@@ -114,6 +114,9 @@ HUD styling
     margin: 10px;
     background-color: #A8000D;
     padding: 5px 5px 3px;
+    text-transform: uppercase;
+    text-align: left;
+    font-family: serif;
 }
 
 #hud {
@@ -131,15 +134,11 @@ HUD styling
 }
 
 #number_of_turns{
-    text-transform: uppercase;
-    text-align: left;
-    font-family: serif;
+
 }
 
 #number_of_matches{
-    text-transform: uppercase;
-    text-align: left;
-    font-family: serif;
+
 }
 
 

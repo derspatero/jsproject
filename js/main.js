@@ -22,7 +22,8 @@ var startStopGame = document.getElementById('start_end_button');
 var numberOfTurns = document.getElementById('number_of_turns');
 var numberOfMatches = document.getElementById('number_of_matches');
 
-var stopGame = false;
+var cardselected = [];
+var stopGame = true;
 var turns = 0;
 var matches = 0;
 
@@ -67,7 +68,7 @@ for (var i = 0; i < 16; i++) {
 }
 cellImages = shuffledCards;
 
-//startStopGame.onclick = startStopClick;
+startStopGame.onclick = startStopClick;
 
 /*function gameSession() {
     stopGame = false;
@@ -87,112 +88,128 @@ cellImages = shuffledCards;
 }
 */
 
-
-/*
 function startStopClick(){
     if(stopGame){
+        startStopGame.innerHTML = 'Stop Game';
         stopGame = false;
-//        gameSession();
+        gameTurn();
     }
     else {
-        stopGame = true
+        startStopGame.innerHTML = 'Start Game';
+        stopGame = true;
     }
 }
-*/
 
+function gameTurn() {
 
-//turn cards
-cell0.onclick = turnOverCard0;
+    //turn cards
+    cell0.onclick = turnOverCard0;
+    cell1.onclick = turnOverCard1;
+    cell2.onclick = turnOverCard2;
+    cell3.onclick = turnOverCard3;
+    cell4.onclick = turnOverCard4;
+    cell5.onclick = turnOverCard5;
+    cell6.onclick = turnOverCard6;
+    cell7.onclick = turnOverCard7;
+    cell8.onclick = turnOverCard8;
+    cell9.onclick = turnOverCard9;
+    cell10.onclick = turnOverCard10;
+    cell11.onclick = turnOverCard11;
+    cell12.onclick = turnOverCard12;
+    cell13.onclick = turnOverCard13;
+    cell14.onclick = turnOverCard14;
+    cell15.onclick = turnOverCard15;
+    startStopGame.onclick = startStopClick;
+
+}
+
 
 function turnOverCard0() {
     turnOverCard(0);
 }
 
-cell1.onclick = turnOverCard1;
 
 function turnOverCard1() {
     turnOverCard(1);
 }
 
-cell2.onclick = turnOverCard2;
 
 function turnOverCard2() {
     turnOverCard(2);
 }
 
-cell3.onclick = turnOverCard3;
+
 
 function turnOverCard3() {
     turnOverCard(3);
 }
 
-cell4.onclick = turnOverCard4;
+
 
 function turnOverCard4() {
     turnOverCard(4);
 }
 
-cell5.onclick = turnOverCard5;
+
 
 function turnOverCard5() {
     turnOverCard(5);
 }
 
-cell6.onclick = turnOverCard6;
+
 
 function turnOverCard6() {
     turnOverCard(6);
 }
 
-cell7.onclick = turnOverCard7;
+
 
 function turnOverCard7() {
     turnOverCard(7);
 }
 
-cell8.onclick = turnOverCard8;
+
 
 function turnOverCard8() {
     turnOverCard(8);
 }
 
-cell9.onclick = turnOverCard9;
+
 
 function turnOverCard9() {
     turnOverCard(9);
 }
 
-cell10.onclick = turnOverCard10;
+
 
 function turnOverCard10() {
     turnOverCard(10);
 }
 
-cell11.onclick = turnOverCard11;
+
 
 function turnOverCard11() {
     turnOverCard(11);
 }
 
-cell12.onclick = turnOverCard12;
+
 
 function turnOverCard12() {
     turnOverCard(12);
 }
 
-cell13.onclick = turnOverCard13;
+
 
 function turnOverCard13() {
     turnOverCard(13);
 }
 
-cell14.onclick = turnOverCard14;
+
 
 function turnOverCard14() {
     turnOverCard(14);
 }
 
-cell15.onclick = turnOverCard15;
 
 function turnOverCard15() {
     turnOverCard(15);
@@ -201,7 +218,43 @@ function turnOverCard15() {
 function turnOverCard(i) {
     i = parseFloat(i);
     cells[i].innerHTML = '<img id="card' + i + '" class="card" src="' + cellImages[i].src + '">';
-    setTimeout(turnAllCardsFaceDown, 10000);
+    if (cardselected[0] == null) {
+        cardselected[0] = i;
+ //       alert('card 0: cell #' + i);
+    }
+    else {
+        cardselected[1] = i;
+        turns = turns + 1;
+        updateNumberOfTurns();
+        if (cellImages[cardselected[0]].src == cellImages[cardselected[1]].src) {
+            newMatch();
+            if (matches == 8){
+                alert ('Yay! It took ' + turns + ' turns.');
+            }
+        }
+        else {
+            alert('no match');
+            turnCardsFaceDown();
+        }
+
+        cardselected[0] = null;
+        cardselected[1] = null;
+
+    }
+}
+
+function updateNumberOfTurns(){
+    numberOfTurns.innerHTML = turns;
+}
+
+function newMatch(){
+    matches = matches + 1;
+    numberOfMatches.innerHTML = matches;
+}
+
+function turnCardsFaceDown() {
+    cells[cardselected[0]].innerHTML = '';
+    cells[cardselected[1]].innerHTML = '';
 }
 
 function turnAllCardsFaceDown() {
@@ -209,3 +262,7 @@ function turnAllCardsFaceDown() {
         cells[i].innerHTML = '';
     }
 }
+
+
+
+
