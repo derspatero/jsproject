@@ -22,7 +22,7 @@ var startStopGame = document.getElementById('start_end_button');
 var numberOfTurns = document.getElementById('number_of_turns');
 var numberOfMatches = document.getElementById('number_of_matches');
 
-var cardselected = [];
+var cardSelected = [];
 var stopGame = true;
 var turns = 0;
 var matches = 0;
@@ -55,18 +55,17 @@ for(var i=0; i < 16; i++) {
     }
 }
 
-
-
-//shuffle cards
-var shuffledCards = [];
-for (var i = 0; i < 16; i++) {
-    var randomPosition = Math.round(Math.random() * 15);
-    while (shuffledCards[randomPosition] != null){
-        randomPosition = Math.round(Math.random() * 15);
+function shuffleCards() {
+    var shuffledCards = [];
+    for (var i = 0; i < 16; i++) {
+        var randomPosition = Math.round(Math.random() * 15);
+        while (shuffledCards[randomPosition] != null) {
+            randomPosition = Math.round(Math.random() * 15);
+        }
+        shuffledCards[randomPosition] = cellImages[i];
     }
-    shuffledCards[randomPosition] = cellImages[i];
+    cellImages = shuffledCards;
 }
-cellImages = shuffledCards;
 
 startStopGame.onclick = startStopClick;
 
@@ -79,6 +78,7 @@ function startStopClick(){
         updateNumberOfTurns();
         newMatch();
         turnAllCardsFaceDown();
+        shuffleCards();
         gameOn();
     }
     else {
@@ -176,20 +176,20 @@ function turnOverCard15() {
 
 function turnOverCard(i) {
     i = parseFloat(i);
-    if (cells[i].innerHTML == '' && cardselected[1] == null) {
+    if (cells[i].innerHTML == '' && cardSelected[1] == null) {
         cells[i].innerHTML = '<img id="card' + i + '" class="card" src="' + cellImages[i].src + '">';
-        if (cardselected[0] == null) {
-            cardselected[0] = i;
+        if (cardSelected[0] == null) {
+            cardSelected[0] = i;
         }
         else {
-            cardselected[1] = i;
+            cardSelected[1] = i;
             turns = turns + 1;
             updateNumberOfTurns();
-            if (cellImages[cardselected[0]].src == cellImages[cardselected[1]].src) {
+            if (cellImages[cardSelected[0]].src == cellImages[cardSelected[1]].src) {
                 matches = matches + 1;
                 newMatch();
-                cardselected[0] = null;
-                cardselected[1] = null;
+                cardSelected[0] = null;
+                cardSelected[1] = null;
                 if (matches == 8) {
                     alert('Yay! It took ' + turns + ' turns.');
                     startStopGame.innerHTML = 'Restart Game';
@@ -212,10 +212,10 @@ function newMatch(){
 }
 
 function turnCardsFaceDown() {
-    cells[cardselected[0]].innerHTML = '';
-    cells[cardselected[1]].innerHTML = '';
-    cardselected[0] = null;
-    cardselected[1] = null;
+    cells[cardSelected[0]].innerHTML = '';
+    cells[cardSelected[1]].innerHTML = '';
+    cardSelected[0] = null;
+    cardSelected[1] = null;
 }
 
 function turnAllCardsFaceDown() {
